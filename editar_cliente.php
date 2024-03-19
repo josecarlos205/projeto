@@ -78,12 +78,12 @@ include('conexao.php');
             <input value="<?php echo $cliente['email']; ?>" name="email" type="text">
         </p>
         <p>
-            <label>Data de Nascimento.....:</label>
-            <input value="<?php echo $cliente['nascimento']; ?>"  name="nascimento" type="text">
+            <label>Telefone........................:</label>
+            <input value="<?php if(empty($cliente['telefone'])) echo formatar_telefone($cliente['telefone']); ?>" placeholder="(43) 98888-8888" name="telefone" type="text">
         </p>
         <p>
-            <label>Telefone........................:</label>
-            <input value="<?php echo $cliente['telefone']; ?>" placeholder="(43) 98888-8888" name="telefone" type="text">
+            <label>Data de Nascimento.....:</label>
+            <input value="<?php if(empty($cliente['nascimento'])) echo formatar_data($cliente['nascimento']); ?>"  name="nascimento" type="text">
         </p>
         <p>
         <button type="submit">Salvar Cliente</button>

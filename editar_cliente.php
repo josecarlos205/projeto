@@ -1,13 +1,12 @@
 <?php 
 
 include('conexao.php');
+$id = intval($_GET['id']);
 
 
     function limpar_texto($str){ 
         return preg_replace("/[^0-9]/", "", $str); 
     }
-
-
 
     if(count($_POST)>0){
 
@@ -44,19 +43,24 @@ include('conexao.php');
         if($erro) {
             echo "<p><b>Erro: $erro</b></p>";
         }else{
-            $sql_code = "INSERT INTO clientes (nome, email, telefone, nascimento, data) VALUES ('$nome', '$email', '$telefone', '$nascimento', NOW())";
+            $sql_code = "UPDATE clientes
+            SET nome='$nome',
+            email='$email',
+            telefone='$telefone',
+            nascimento='$nascimento'
+            WHERE id = '$id'";
             $deu_certo = $mysqli->query($sql_code) or die($mysqli->error);
             if($deu_certo) {
-                echo "<p><b>Cliente cadastrado com sucesso !!</b></p>";
+                echo "<p><b>Cliente atualizado com sucesso !!</b></p>";
                 unset($_POST);
             }
         }
     }
 
-    $id = intval($_GET['id']);
-    $sql_cliente= "SELECT * FROM clientes WHERE id = '$id'";
-    $query_cliente=$mysqli->query($sql_cliente) or die($mysqli->error);
-    $cliente=$query_cliente->fetch_assoc();
+    $sql_cliente = "SELECT *FROM clientes WHERE id = '$id'";
+    $query_cliente = $mysqli->query($sql_cliente) or die($mysqli->error);
+    $cliente = $query_cliente->fetch_assoc();
+
 ?>
 
 
@@ -71,7 +75,7 @@ include('conexao.php');
     <form method="POST" action="">
         <p>
             <label>Nome............................:</label>
-            <input value="<?php echo $cliente['nome']; ?>" name="nome" type="text">
+            <input value="<?php  echo $cliente['nome']; ?>" name="nome" type="text">
         </p>
         <p>
             <label>E-mail...........................:</label>
@@ -79,11 +83,11 @@ include('conexao.php');
         </p>
         <p>
             <label>Telefone........................:</label>
-            <input value="<?php if(empty($cliente['telefone'])) echo formatar_telefone($cliente['telefone']); ?>" placeholder="(43) 98888-8888" name="telefone" type="text">
+            <input value="<?php if(!empty($cliente['telefone'])) echo formatar_telefone($cliente['telefone']); ?>" placeholder="(43) 98888-8888" name="telefone" type="text">
         </p>
         <p>
             <label>Data de Nascimento.....:</label>
-            <input value="<?php if(empty($cliente['nascimento'])) echo formatar_data($cliente['nascimento']); ?>"  name="nascimento" type="text">
+            <input value="<?php if(!empty($cliente['nascimento'])) echo formatar_data($cliente['nascimento']); ?>"  name="nascimento" type="text">
         </p>
         <p>
         <button type="submit">Salvar Cliente</button>

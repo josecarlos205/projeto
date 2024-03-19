@@ -11,7 +11,7 @@ if ($mysqli->connect_errno) {
     die("Falha na conexação do banco de dados");
 }
 
-function format_data($data) {
+function formatar_data($data) {
     return implode('/', array_reverse(explode('-',$data)));
 }
 

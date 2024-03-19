@@ -33,14 +33,17 @@
             <?php 
             } else {
                 while($cliente = $query_clientes->fetch_assoc()) {
+
                     $telefone="Não informado";
                     if(!empty($cliente['telefone'])) {
                         $telefone = formatar_telefone($cliente['telefone']);
                     }
+
                     $nascimento="Não informado";
                     if(!empty($cliente['nascimento'])) {
                         $nascimento=formatar_data($cliente['nascimento']);
                     }
+                    
                     $data_cadastro=date("d/m/y H:i", strtotime($cliente['data']));              
                 ?>    
                 <tr> 
